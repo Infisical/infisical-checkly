@@ -20,7 +20,7 @@ jobs:
         run: npm install
 
       - name: Deploy to Checkly
-        run: npx checkly deploy
+        run: npx checkly deploy --force
         env:
           CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
           CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}
