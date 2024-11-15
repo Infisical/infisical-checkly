@@ -2,10 +2,13 @@ import * as path from "path";
 import { ApiCheck, AssertionBuilder } from "checkly/constructs";
 import { secretsGroup } from "../secrets-group.check";
 import {
-  IMPORTED_SECRETS_SEED_DATA,
+  LIST_SECRETS_IMPORT_SEED_DATA,
+  LIST_SECRETS_RECURSIVE_SEED_DATA,
+  LIST_SECRETS_REFERENCE_SECRET_DATA,
+  LIST_SECRETS_REFERENCE_SEED_DATA,
+  LIST_SECRETS_REFERENCED_SECRET,
   LIST_SECRETS_SEED_DATA,
-  LIST_SECRETS_TAG_DATA,
-  RECURSIVE_SECRETS_SEED_DATA
+  LIST_SECRETS_TAG_DATA
 } from "./seed";
 
 const COMPARE_SECRET = LIST_SECRETS_SEED_DATA.secrets[0];
@@ -26,12 +29,15 @@ new ApiCheck("list-secrets-check", {
       { key: "workspaceId", value: "{{PROJECT_ID}}" },
       { key: "environment", value: "dev" },
       { key: "recursive", value: "true" },
-      { key: "include_imports", value: "true" }
+      { key: "include_imports", value: "true" },
+      { key: "expandSecretReferences", value: "true" }
     ],
     assertions: [
       AssertionBuilder.statusCode().equals(200),
       AssertionBuilder.jsonBody("$.secrets.length").equals(
-        LIST_SECRETS_SEED_DATA.secrets.length + RECURSIVE_SECRETS_SEED_DATA.secrets.length
+        LIST_SECRETS_SEED_DATA.secrets.length +
+          LIST_SECRETS_RECURSIVE_SEED_DATA.secrets.length +
+          LIST_SECRETS_REFERENCE_SEED_DATA.secrets.length
       ),
       AssertionBuilder.jsonBody("$.secrets[0].id").isNotNull(),
       AssertionBuilder.jsonBody("$.secrets[0].workspace").isNotNull(),
@@ -54,15 +60,19 @@ new ApiCheck("list-secrets-check", {
       AssertionBuilder.jsonBody("$.secrets[*].tags[*].slug").contains(LIST_SECRETS_TAG_DATA.slug),
       // verify recursion
       AssertionBuilder.jsonBody("$.secrets[*].secretPath").contains(
-        RECURSIVE_SECRETS_SEED_DATA.secretPath
+        LIST_SECRETS_RECURSIVE_SEED_DATA.secretPath
       ),
       // verify imports
       AssertionBuilder.jsonBody("$.imports[0].secretPath").contains(
-        IMPORTED_SECRETS_SEED_DATA.secretPath
+        LIST_SECRETS_IMPORT_SEED_DATA.secretPath
       ),
       AssertionBuilder.jsonBody("$.imports[0].secrets.length").equals(
-        IMPORTED_SECRETS_SEED_DATA.secrets.length + 1
-      )
+        LIST_SECRETS_IMPORT_SEED_DATA.secrets.length
+      ),
+      // verify reference secret value expands
+      AssertionBuilder.jsonBody(
+        `$.secrets[?(@.secretKey=="${LIST_SECRETS_REFERENCE_SECRET_DATA.secretKey}")].secretValue`
+      ).contains(LIST_SECRETS_REFERENCED_SECRET.secretValue)
       // don't think we need to do the rest?
       // "metadata": "<any>",
       // "createdAt": "2023-11-07T05:31:56Z",

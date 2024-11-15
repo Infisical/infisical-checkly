@@ -2,11 +2,12 @@ import { getAccessToken } from "../../helpers/getAccessToken";
 import { setupProject } from "../../helpers/setupProject";
 import { setupSecrets } from "../../helpers/setupSecrets";
 import {
-  IMPORTED_SECRETS_SEED_DATA,
+  LIST_SECRETS_IMPORT_SEED_DATA,
+  LIST_SECRETS_RECURSIVE_FOLDER_DATA,
+  LIST_SECRETS_RECURSIVE_SEED_DATA,
+  LIST_SECRETS_REFERENCE_SEED_DATA,
   LIST_SECRETS_SEED_DATA,
-  LIST_SECRETS_TAG_DATA,
-  RECURSIVE_FOLDER_DATA,
-  RECURSIVE_SECRETS_SEED_DATA
+  LIST_SECRETS_TAG_DATA
 } from "./seed";
 import { setupTag } from "../../helpers/setupTag";
 import { setupFolder } from "../../helpers/setupFolder";
@@ -31,13 +32,13 @@ async function setup() {
   await setupFolder({
     accessToken,
     workspaceId: project.id,
-    ...RECURSIVE_FOLDER_DATA
+    ...LIST_SECRETS_RECURSIVE_FOLDER_DATA
   });
 
   await setupSecrets({
     accessToken,
     workspaceId: project.id,
-    ...RECURSIVE_SECRETS_SEED_DATA
+    ...LIST_SECRETS_RECURSIVE_SEED_DATA
   });
 
   // import data
@@ -48,15 +49,22 @@ async function setup() {
     path: LIST_SECRETS_SEED_DATA.secretPath,
     isReplication: false,
     import: {
-      environment: IMPORTED_SECRETS_SEED_DATA.environment,
-      path: IMPORTED_SECRETS_SEED_DATA.secretPath
+      environment: LIST_SECRETS_IMPORT_SEED_DATA.environment,
+      path: LIST_SECRETS_IMPORT_SEED_DATA.secretPath
     }
   });
 
   await setupSecrets({
     accessToken,
     workspaceId: project.id,
-    ...IMPORTED_SECRETS_SEED_DATA
+    ...LIST_SECRETS_IMPORT_SEED_DATA
+  });
+
+  // reference data
+  await setupSecrets({
+    accessToken,
+    workspaceId: project.id,
+    ...LIST_SECRETS_REFERENCE_SEED_DATA
   });
 
   // assign globals required for API check
