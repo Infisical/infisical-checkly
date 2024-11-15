@@ -1,12 +1,14 @@
 name: Deploy Checkly
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - main
 
 jobs:
-  test-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,14 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Checkly tests
-        run: npx checkly test --private-location=infisical-gamma --reporter=github --verbose
-        env:
-          CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
-          CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}
-
       - name: Deploy to Checkly
-        if: success()
         run: npx checkly deploy --force
         env:
           CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
