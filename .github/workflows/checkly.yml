@@ -1,0 +1,29 @@
+name: Deploy Checkly
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy to Checkly
+        run: npx checkly deploy
+        env:
+          CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
+          CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}
+          PAGER_DUTY_ACCOUNT: ${{ secrets.PAGER_DUTY_ACCOUNT }}
+          PAGER_DUTY_SERVICE_NAME: ${{ secrets.PAGER_DUTY_SERVICE_NAME }}
+          PAGER_DUTY_SERVICE_KEY: ${{ secrets.PAGER_DUTY_SERVICE_KEY }}
