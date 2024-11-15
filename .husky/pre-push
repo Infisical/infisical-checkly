@@ -1,0 +1,1 @@
+npx checkly test --private-location=infisical-gamma
