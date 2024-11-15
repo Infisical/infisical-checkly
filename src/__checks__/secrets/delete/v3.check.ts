@@ -3,8 +3,8 @@ import { ApiCheck, AssertionBuilder } from "checkly/constructs";
 import { secretsGroup } from "../secrets-group.check";
 import { DELETE_SECRET_SEED } from "./seed";
 
-new ApiCheck("delete-secret-check", {
-  name: "Delete Secret Check",
+new ApiCheck("delete-secret-v3-check", {
+  name: "Delete Secret v3 Check",
   group: secretsGroup,
   setupScript: {
     entrypoint: path.join(__dirname, "./setup.ts")

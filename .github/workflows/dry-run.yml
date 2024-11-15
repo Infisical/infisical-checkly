@@ -1,4 +1,4 @@
-name: Test Checkly
+name: Dry-Run Checkly
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  dryrun:
+  dry-run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Checkly tests
+      - name: Run Checkly Tests
         run: npx checkly test --private-location=infisical-gamma --reporter=github --verbose
         env:
           CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}

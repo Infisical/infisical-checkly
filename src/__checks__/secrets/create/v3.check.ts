@@ -16,8 +16,8 @@ const SECRET_DATA = {
   secretReminderNote: "reminder"
 };
 
-new ApiCheck("create-secret-check", {
-  name: "Create Secret Check",
+new ApiCheck("create-secret-v3-check", {
+  name: "Create Secret v3 Check",
   group: secretsGroup,
   setupScript: {
     entrypoint: path.join(__dirname, "./setup.ts")

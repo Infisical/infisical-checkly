@@ -18,8 +18,8 @@ const UPDATE_SECRET_DATA = {
   secretReminderNote: UPDATE_SECRET_SEED.secretReminderNote + " updated"
 };
 
-new ApiCheck("update-secret-check", {
-  name: "Update Secret Check",
+new ApiCheck("update-secret-v3-check", {
+  name: "Update Secret v3 Check",
   group: secretsGroup,
   setupScript: {
     entrypoint: path.join(__dirname, "./setup.ts")

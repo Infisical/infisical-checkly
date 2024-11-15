@@ -13,8 +13,8 @@ import {
 
 const COMPARE_SECRET = LIST_SECRETS_SEED_DATA.secrets[0];
 
-new ApiCheck("list-secrets-check", {
-  name: "List Secrets Check",
+new ApiCheck("list-secrets-v3-check", {
+  name: "List Secrets v3 Check",
   group: secretsGroup,
   setupScript: {
     entrypoint: path.join(__dirname, "./setup.ts")
