@@ -1,51 +1,76 @@
-# Checkly Monitoring-as-code: Advanced Project
+# Infisical Checkly Test Suite
 
-This example project shows how you can use the Checkly CLI in a monitoring as code (MaC) workflow. We are using the
-https://checklyhq.com website as a monitoring target.
-
-1. Write API Checks and Playwright-powered Browser Checks.
-2. Add Alert Channels, and dry-run your Checks on 20+ global locations.
-3. Test -> Deploy: now you have your app monitored around the clock. All from your code base.
-
-```
-npm create checkly -- --template advanced-project
-```
+This project includes Infisical's Checkly test suite to verify API responses against gamma.
 
 ## Project Structure
 
-This project has examples of all Checkly check types and showcases some advanced features. It also adds a GitHub Actions workflow.
+Tests are located within the <strong>[\_\_checks__](src/__checks__)</strong> folder, and group with their respective
+resource. For example
+the [__secrets__](src/__checks__/secrets) folder contains all the checks associated with endpoints pertaining to the
+secrets
+resource.
 
-- Running `npx checkly test` will look for `.check.ts` files and `.spec.ts` in `__checks__` directories and execute them in a dry run.
+Within each resource folder a __group-check__ file is present to associate all checks within this resource into a single
+collection within Checkly. In addition, a sub-folder for each endpoint operation is available; co-locating all the
+associated files for running this check. Each
+operation includes the following files:
 
-- Running `npx checkly deploy` will deploy your checks to Checkly, attach alert channels, and run them on a 10m schedule in the 
-region `us-east-1` and `eu-west-1`
+- __v[#].check.ts__ - the actual check file to be run against the API endpoint, indicating which endpoint version for
+  this operation is being tested
+- setup.ts (optional) - an optional script to setup any resources required to test this API endpoint
+- teardown.ts (optional) - an optional script to teardown any resources created during this check
+- seed.ts (optional) - an optional file containing any seed data that needs to be referenced during the checks execution
 
-- An example GitHub Actions workflow is in the `.github/workflow.yml` file. It triggers all the checks in the project and deploys
-them if they pass.
+```
+secrets/
+├── create/
+├── delete/
+├── list/
+├── update/
+│   ├── seed.ts
+│   ├── setup.ts
+│   ├── teardown.ts
+│   └── v3.check.ts
+└── secrets-group.ts
+```
+
+In addition, a [__helpers__](src/__checks__/helpers) folder is located within the [__checks__](src/__checks__) folder
+that contains commonly used setup and teardown functions used across checks.
+
+## Development Setup
+
+1. Install dependencies using `npm install`.
+2. Run a tunnel to your local infisical instance using `ngrok` or tunneler of choice.
+2. Create a machine identity in your local infisical instance and generate a client secret.
+3. Create a `.env` file at the root of your project and populate it with your tunnel URL and identity credentials.
+2. Log in to your Checkly account using `npx checkly login`
+3. Verify your setup by running `npx checkly test --env-file="./.env"` and making sure the checks successfully run
+4. Add new tests following the project structure.
+    1. You can run individual tests by appending the test name to the above command.
+    2. You can specify a run location using the `--location` flag.
+    3. You can dry run your tests against gamma using the `--private-location` flag by setting up
+       a [private location](https://www.checklyhq.com/docs/private-locations/) and running the docker agent on your
+       machine provided you're running twingate.
+    4. Use the `--verbose` flag for more detailed insights into running checks.
+
+## Deployment
+
+1. Verify new tests are passing locally.
+    1. Running new tests against gamma from your machine is encouraged.
+3. Create a PR for your changes.
+    1. A workflow will be triggered and dry-run all tests against gamma.
+5. If the dry-run passes successfully, your PR can be merged into `main`.
+    1. Once merged a workflow will trigger to deploy new/updated checks to Checkly.
 
 ## CLI Commands
 
-Run the core CLI commands with `npx checkly <command>` 
+Run the core CLI commands with `npx checkly <command>`
 
-| Command              | Action                                           |
-|:---------------------|:-------------------------------------------------|
-| `npx checkly test`   | Dry run all the checks in your project           |
-| `npx checkly deploy` | Deploy your checks to the Checkly cloud          |
-| `npx checkly login`  | Log in to your Checkly account                   |
-| `npx checkly --help` | Show help for each command.                      |
+| Command              | Action                                  |
+|:---------------------|:----------------------------------------|
+| `npx checkly test`   | Dry run all the checks in your project  |
+| `npx checkly deploy` | Deploy your checks to the Checkly cloud |
+| `npx checkly login`  | Log in to your Checkly account          |
+| `npx checkly --help` | Show help for each command.             |
 
 [Check the docs for the full CLI reference](https://www.checklyhq.com/docs/cli/command-line-reference/).
-
-## Adding and running `@playwright/test`
-
-You can add `@playwright/test` to this project to get full code completion and run `.spec.ts` files for local debugging.
-It's best to install the Playwright npm package version that matches your [Checkly runtime](https://www.checklyhq.com/docs/cli/npm-packages/).
-
-```bash
-npm install --save-dev @playwright/test@1.38.1
-```
-
-## Questions?
-
-Check [our CLI docs](https://www.checklyhq.com/docs/cli/), the [main Checkly docs](https://checklyhq.com/docs) or 
-join our [Slack community](https://checklyhq.com/slack).

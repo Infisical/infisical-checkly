@@ -19,6 +19,5 @@ declare const process: {
     PROJECT_ID?: string;
     ACCESS_TOKEN?: string;
     SECRET_ID?: string;
-    TAG_ID?: string;
   };
 };
