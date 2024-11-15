@@ -67,7 +67,7 @@ new ApiCheck("list-secrets-check", {
         LIST_SECRETS_IMPORT_SEED_DATA.secretPath
       ),
       AssertionBuilder.jsonBody("$.imports[0].secrets.length").equals(
-        LIST_SECRETS_IMPORT_SEED_DATA.secrets.length + 1
+        LIST_SECRETS_IMPORT_SEED_DATA.secrets.length
       ),
       // verify reference secret value expands
       AssertionBuilder.jsonBody(

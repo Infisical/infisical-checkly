@@ -1,7 +1,7 @@
 import * as path from "path";
 import { ApiCheck, AssertionBuilder } from "checkly/constructs";
 import { secretsGroup } from "../secrets-group.check";
-import { UPDATE_SECRET_NEW_FOLDER, UPDATE_SECRET_SEED } from "./seed";
+import { UPDATE_SECRET_SEED } from "./seed";
 
 const UPDATE_SECRET_DATA = {
   workspaceId: "{{PROJECT_ID}}",
