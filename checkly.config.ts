@@ -1,6 +1,7 @@
 import { defineConfig } from "checkly";
 import { AlertEscalationBuilder, RetryStrategyBuilder } from "checkly/constructs";
 import { locations } from "./src/locations";
+import { infisicalGamma } from "./src/private-locations";
 
 const config = defineConfig({
   projectName: "Infisical Gamma API",
@@ -14,6 +15,7 @@ const config = defineConfig({
       maxRetries: 3,
       sameRegion: true
     }),
+    privateLocations: [infisicalGamma],
     alertEscalationPolicy: AlertEscalationBuilder.runBasedEscalation(1),
     checkMatch: "**/__checks__/**/*.check.ts"
   },
