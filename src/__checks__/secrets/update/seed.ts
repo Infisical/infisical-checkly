@@ -4,7 +4,7 @@ export const UPDATE_SECRET_SEED: Omit<TSetupSecret, "accessToken" | "workspaceId
   environment: "dev",
   secretPath: "/",
   type: "shared",
-  secretName: `SECRET`,
+  secretName: `UPDATE_SECRET`,
   secretValue: `value`,
   secretComment: `comment`,
   tagIds: [],

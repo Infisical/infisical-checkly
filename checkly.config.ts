@@ -1,13 +1,13 @@
 import { defineConfig } from "checkly";
 import { AlertEscalationBuilder, RetryStrategyBuilder } from "checkly/constructs";
-import { infisicalGamma } from "./src/private-locations";
+import { locations } from "./src/locations";
 
 const config = defineConfig({
   projectName: "Infisical Gamma API",
   logicalId: "infisical-gamma-api",
   checks: {
     frequency: 10,
-    privateLocations: [infisicalGamma],
+    locations,
     runtimeId: "2024.09",
     retryStrategy: RetryStrategyBuilder.fixedStrategy({
       baseBackoffSeconds: 60,
