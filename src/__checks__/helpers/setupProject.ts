@@ -17,13 +17,14 @@ export const setupProject = async ({
     Authorization: `Bearer ${accessToken}`
   };
 
+  const id = Date.now() + "-" + Math.random().toString().replace(".", "");
   const { data } = await axios.post<{
     project: { orgId: string; id: string; slug: string };
   }>(
     `${SITE_URL}/api/v2/workspace`,
     {
-      projectName: projectName ?? `Checkly Project ${timestamp}`,
-      slug: projectSlug ?? `checkly-project-${timestamp}`
+      projectName: projectName ?? `Checkly Project ${id}`,
+      slug: projectSlug ?? `${id}`
     },
     {
       headers
