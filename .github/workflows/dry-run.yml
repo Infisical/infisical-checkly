@@ -20,7 +20,7 @@ jobs:
         run: npm install
 
       - name: Run Checkly Tests
-        run: npx checkly test --private-location=infisical-gamma --reporter=github --verbose
+        run: npx checkly test --private-location=infisical-gamma --reporter=ci -e SITE_URL=${{ secrets.SITE_URL }} CLIENT_ID=${{ secrets.CLIENT_ID }} CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}
         env:
           CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
           CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}

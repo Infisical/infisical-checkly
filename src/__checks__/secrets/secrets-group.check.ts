@@ -5,7 +5,7 @@ export const secretsGroup = new CheckGroup("secrets-check-group", {
   name: "Secrets Check Group",
   activated: true,
   muted: false,
-  concurrency: 100,
+  concurrency: 50,
   runParallel: true,
   alertChannels: [pagerDutyChannel]
 });
