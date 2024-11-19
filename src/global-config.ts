@@ -1,10 +1,11 @@
 import { ChecklyConfig } from "checkly";
 import { AlertEscalationBuilder, RetryStrategyBuilder } from "checkly/constructs";
 
-export enum Instances {
-  Gamma = "gamma",
+export enum Instance {
+  GAMMA = "gamma",
   EU = "eu",
-  US = "us"
+  US = "us",
+  DEV = "dev"
 }
 
 export const mergeGlobalConfig = ({
