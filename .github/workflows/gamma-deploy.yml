@@ -25,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Deploy Gamma to Checkly
-        run: npx checkly deploy --force
+        run: npx checkly deploy --force --config=./checkly.gamma.config.ts
         env:
           CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
           CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}
