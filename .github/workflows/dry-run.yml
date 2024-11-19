@@ -19,6 +19,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - uses: twingate/github-action@v1
+        with:
+        # The Twingate Service Key used to connect Twingate to the proper service
+        # Learn more about [Twingate Services](https://docs.twingate.com/docs/services)
+        #
+        # Required
+          service-key: ${{ secrets.TWINGATE_SERVICE_KEY }}
+      - name: Start Checkly Agent
+        run: |
+          docker run -e API_KEY=${{ secrets.CHECKLY_AGENT_API_KEY }} -d checkly/agent:latest
+          # Wait a few seconds for the agent to start up and register
+          sleep 10
+
       - name: Run Checkly Tests
         run: npx checkly test --private-location=infisical-gamma --reporter=ci -e SITE_URL=${{ secrets.SITE_URL }} CLIENT_ID=${{ secrets.CLIENT_ID }} CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}
         env:
