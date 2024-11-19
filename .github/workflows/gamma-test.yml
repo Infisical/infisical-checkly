@@ -36,7 +36,12 @@ jobs:
           sleep 10
 
       - name: Run Checkly Tests
-        run: INSTANCE_ID=${{ secrets.INSTANCE_ID }} npx checkly test --private-location=infisical-gamma --reporter=ci -e SITE_URL=${{ secrets.SITE_URL }} CLIENT_ID=${{ secrets.CLIENT_ID }} CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}
+        run: npx checkly test --private-location=infisical-gamma --reporter=ci
+#       run: npx checkly test --private-location=infisical-gamma --reporter=ci -e SITE_URL=${{ secrets.SITE_URL }} CLIENT_ID=${{ secrets.CLIENT_ID }} CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}
         env:
           CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
           CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}
+          INSTANCE_ID: ${{ secrets.INSTANCE_ID }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}

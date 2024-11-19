@@ -1,4 +1,4 @@
-name: Deploy Checkly
+name: Gamma Deploy
 
 on:
   pull_request:
@@ -9,10 +9,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  gamma-deploy:
     runs-on: ubuntu-latest
     environment:
-      name: prod
+      name: gamma
     steps:
       - uses: actions/checkout@v3
 
@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Deploy to Checkly
+      - name: Deploy Gamma to Checkly
         run: npx checkly deploy --force
         env:
           CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
@@ -32,3 +32,7 @@ jobs:
           PAGER_DUTY_ACCOUNT: ${{ secrets.PAGER_DUTY_ACCOUNT }}
           PAGER_DUTY_SERVICE_NAME: ${{ secrets.PAGER_DUTY_SERVICE_NAME }}
           PAGER_DUTY_SERVICE_KEY: ${{ secrets.PAGER_DUTY_SERVICE_KEY }}
+          INSTANCE_ID: ${{ secrets.INSTANCE_ID }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
