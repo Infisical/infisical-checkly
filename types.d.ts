@@ -8,6 +8,7 @@ declare const process: {
     SITE_URL: string;
     CLIENT_ID: string;
     CLIENT_SECRET: string;
+    INSTANCE_ID: string;
 
     // create integration first in UI as per docs (https://www.checklyhq.com/docs/cli/constructs-reference/#pagerdutyalertchannel)
     // alternatively could do checkly alert ID, either way need to create first
