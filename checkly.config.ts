@@ -4,8 +4,8 @@ import { locations } from "./src/locations";
 import { infisicalGamma } from "./src/private-locations";
 
 const config = defineConfig({
-  projectName: "Infisical Gamma API",
-  logicalId: "infisical-gamma-api",
+  projectName: "Infisical API",
+  logicalId: "infisical-api",
   checks: {
     frequency: 10,
     locations,
