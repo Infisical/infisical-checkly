@@ -7,7 +7,7 @@ jobs:
   us-deploy:
     runs-on: ubuntu-latest
     environment:
-      name: prod
+      name: prod-us
     steps:
       - uses: actions/checkout@v3
 

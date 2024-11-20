@@ -7,7 +7,7 @@ jobs:
   eu-deploy:
     runs-on: ubuntu-latest
     environment:
-      name: eu
+      name: prod-eu
     steps:
       - uses: actions/checkout@v3
 
