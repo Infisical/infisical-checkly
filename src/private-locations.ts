@@ -2,8 +2,8 @@ import { PrivateLocation } from "checkly/constructs";
 
 // Currently we only run against gamma as a PR status check
 
-export const infisicalGamma = new PrivateLocation("infisical-gamma", {
-  name: "Infisical Gamma",
+export const privateLocation = new PrivateLocation(`infisical-${process.env.INSTANCE_ID}`, {
+  name: `Infisical ${process.env.INSTANCE_ID.toUpperCase()}`,
   icon: "squirrel",
-  slugName: `infisical-gamma`
+  slugName: `infisical-${process.env.INSTANCE_ID}`
 });

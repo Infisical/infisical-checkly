@@ -1,4 +1,4 @@
-import { infisicalGamma } from "./private-locations";
+import { privateLocation } from "./private-locations";
 import { Instance } from "./global-config";
 import { CheckConfigDefaults } from "checkly/dist/services/checkly-config-loader";
 
@@ -6,7 +6,7 @@ export const getLocations = (): Pick<CheckConfigDefaults, "locations" | "private
   switch (process.env.INSTANCE_ID) {
     case Instance.GAMMA:
       return {
-        privateLocations: [infisicalGamma]
+        privateLocations: [privateLocation]
       };
     case Instance.EU:
       return {
