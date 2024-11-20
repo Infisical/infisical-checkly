@@ -1,19 +1,13 @@
-name: Gamma Deploy
+name: EU Deploy
 
 on:
-# TODO: add back once we have dedicated agent?
-#  pull_request:
-#    types:
-#      - closed
-#    branches:
-#      - main
   workflow_dispatch:
 
 jobs:
   gamma-deploy:
     runs-on: ubuntu-latest
     environment:
-      name: gamma
+      name: us
     steps:
       - uses: actions/checkout@v3
 
@@ -25,8 +19,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Deploy Gamma to Checkly
-        run: npx checkly deploy --force --config=./checkly.gamma.config.ts
+      - name: Run Checkly Tests
+        run: npx checkly test --location=eu-central-1 --reporter=ci
+        env:
+          CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
+          CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}
+          INSTANCE_ID: ${{ secrets.INSTANCE_ID }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+
+      - name: Deploy US to Checkly
+        run: npx checkly deploy --force --config=./checkly.eu.config.ts
         env:
           CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
           CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}
