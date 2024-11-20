@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  gamma-deploy:
+  us-deploy:
     runs-on: ubuntu-latest
     environment:
-      name: us
+      name: prod
     steps:
       - uses: actions/checkout@v3
 
