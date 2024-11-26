@@ -6,7 +6,6 @@ const config = defineConfig(
     projectName: "Infisical US",
     logicalId: "infisical-us",
     checks: {
-      activated: false,
       locations: ["us-east-1"]
     }
   })

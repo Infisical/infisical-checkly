@@ -7,6 +7,7 @@ const config = defineConfig(
     projectName: "Infisical Gamma",
     logicalId: "infisical-gamma",
     checks: {
+      activated: false,
       privateLocations: [privateLocation]
     }
   })
