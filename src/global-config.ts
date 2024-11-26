@@ -23,7 +23,7 @@ export const mergeGlobalConfig = ({
       maxRetries: 3,
       sameRegion: true
     }),
-    alertEscalationPolicy: AlertEscalationBuilder.runBasedEscalation(1),
+    alertEscalationPolicy: AlertEscalationBuilder.runBasedEscalation(3),
     checkMatch: "**/__checks__/**/*.check.ts",
     tags: [process.env.INSTANCE_ID!, ...(checks?.tags ?? [])],
     ...checks,
