@@ -1,5 +1,5 @@
 import { ChecklyConfig } from "checkly";
-import { AlertEscalationBuilder, RetryStrategyBuilder } from "checkly/constructs";
+import { AlertEscalationBuilder, Dashboard, RetryStrategyBuilder } from "checkly/constructs";
 
 export enum Instance {
   GAMMA = "gamma",
@@ -38,4 +38,11 @@ export const mergeGlobalConfig = ({
     retries: 0,
     ...cli
   }
+});
+
+new Dashboard(`infisical-${process.env.INSTANCE_ID!}`, {
+  header: `Infisical - ${process.env.INSTANCE_ID!.toUpperCase()}`,
+  description: `service availability and response times for Infisical ${process.env.INSTANCE_ID!.toUpperCase()}`,
+  tags: [process.env.INSTANCE_ID!],
+  customUrl: `infisical-${process.env.INSTANCE_ID!}`
 });
