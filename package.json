@@ -10,6 +10,11 @@
     "type-check": "tsc --noEmit",
     "lint-staged": "lint-staged"
   },
+
+  "overrides": {
+    "axios": "^1.8.2"
+  },
+
   "author": "",
   "license": "ISC",
   "devDependencies": {
